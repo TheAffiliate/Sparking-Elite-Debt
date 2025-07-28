@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuck Norris API - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+
+        .api-info {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .api-info h2 {
+            color: #ff6b6b;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #ff6b6b;
+            padding-bottom: 10px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .step {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #667eea;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            color: #333;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .endpoint-box {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .endpoint-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .endpoint {
+            background: #263238;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .response-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minospace(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .category-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        .joke-highlight {
+            background: linear-gradient(135deg, #ffd89b, #19547b);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .joke-highlight h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .joke-text {
+            font-size: 1.2em;
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .footer {
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .highlight {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🥋 Chuck Norris API Guide</h1>
+            <p>Your complete guide to connecting and retrieving Chuck Norris jokes</p>
+        </div>
+
+        <!-- API Overview -->
+        <div class="api-info">
+            <h2>🚀 API Overview</h2>
+            <p><strong>Base URL:</strong> <span class="highlight">https://api.chucknorris.io/</span></p>
+            <p><strong>Type:</strong> Free JSON REST API</p>
+            <p><strong>Authentication:</strong> None required!</p>
+            <p><strong>Rate Limiting:</strong> No limits</p>
+            
+            <div class="note">
+                <strong>💡 Note:</strong> This API provides hand-curated Chuck Norris facts and jokes in JSON format. No API key required - just make HTTP requests!
+            </div>
+        </div>
+
+        <!-- Steps to Connect -->
+        <div class="api-info">
+            <h2>📋 How to Connect - Step by Step</h2>
+            
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Endpoint</h3>
+                    <p>Select from random jokes, category-specific jokes, search functionality, or get available categories.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Make HTTP GET Request</h3>
+                    <p>Use any HTTP client (curl, fetch, axios, etc.) to send a GET request to the chosen endpoint.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Set Accept Header</h3>
+                    <p>Include 'accept: application/json' header to ensure you receive JSON response format.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Parse JSON Response</h3>
+                    <p>Handle the JSON response containing joke data, including value, id, categories, and metadata.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Endpoints -->
+        <div class="api-info">
+            <h2>🎯 Available Endpoints</h2>
+            
+            <div class="endpoint-box">
+                <h4>1. Get Random Joke</h4>
+                <div class="endpoint">GET https://api.chucknorris.io/jokes/random</div>
+                <p>Returns a completely random Chuck Norris joke.</p>
+            </div>
+            
+            <div class="endpoint-box">
+                <h4>2. Get Random Joke by Category</h4>
+                <div class="endpoint">GET https://api.chucknorris.io/jokes/random?category={category}</div>
+                <p>Returns a random joke from a specific category (e.g., dev, explicit, food).</p>
+            </div>
+            
+            <div class="endpoint-box">
+                <h4>3. Get Personalized Joke</h4>
+                <div class="endpoint">GET https://api.chucknorris.io/jokes/random?name={name}</div>
+                <p>Returns a personalized joke replacing "Chuck Norris" with the provided name.</p>
+            </div>
+            
+            <div class="endpoint-box">
+                <h4>4. Search Jokes</h4>
+                <div class="endpoint">GET https://api.chucknorris.io/jokes/search?query={query}</div>
+                <p>Search for jokes containing specific keywords.</p>
+            </div>
+            
+            <div class="endpoint-box">
+                <h4>5. Get Categories</h4>
+                <div class="endpoint">GET https://api.chucknorris.io/jokes/categories</div>
+                <p>Returns an array of all available joke categories.</p>
+            </div>
+        </div>
+
+        <!-- Example Response -->
+        <div class="api-info">
+            <h2>📊 Example API Response</h2>
+            <div class="response-example">{
+  "categories": ["dev"],
+  "created_at": "2019-06-02 08:47:39.43184",
+  "icon_url": "https://api.chucknorris.io/img/avatar/chuck-norris.png",
+  "id": "bwoz2uwsqnwmyawyxdvo1w",
+  "updated_at": "2019-06-02 08:47:39.43184", 
+  "url": "https://api.chucknorris.io/jokes/bwoz2uwsqnwmyawyxdvo1w",
+  "value": "Chuck Norris finished World of Warcraft."
+}</div>
+        </div>
+
+        <!-- Available Categories -->
+        <div class="api-info">
+            <h2>🏷️ Available Categories</h2>
+            <div class="categories-grid">
+                <div class="category-tag">animal</div>
+                <div class="category-tag">career</div>
+                <div class="category-tag">celebrity</div>
+                <div class="category-tag">dev</div>
+                <div class="category-tag">explicit</div>
+                <div class="category-tag">fashion</div>
+                <div class="category-tag">food</div>
+                <div class="category-tag">history</div>
+                <div class="category-tag">money</div>
+                <div class="category-tag">movie</div>
+                <div class="category-tag">music</div>
+                <div class="category-tag">political</div>
+                <div class="category-tag">religion</div>
+                <div class="category-tag">science</div>
+                <div class="category-tag">sport</div>
+                <div class="category-tag">travel</div>
+            </div>
+        </div>
+
+        <!-- Sample Code Examples -->
+        <div class="api-info">
+            <h2>💻 Code Examples</h2>
+            
+            <div class="endpoint-box">
+                <h4>JavaScript (Fetch API)</h4>
+                <div class="response-example">fetch('https://api.chucknorris.io/jokes/random')
+  .then(response => response.json())
+  .then(data => console.log(data.value))
+  .catch(error => console.error('Error:', error));</div>
+            </div>
+            
+            <div class="endpoint-box">
+                <h4>Python (Requests)</h4>
+                <div class="response-example">import requests
+
+response = requests.get('https://api.chucknorris.io/jokes/random')
+if response.status_code == 200:
+    joke = response.json()
+    print(joke['value'])
+else:
+    print(f"Error: {response.status_code}")</div>
+            </div>
+            
+            <div class="endpoint-box">
+                <h4>cURL Command</h4>
+                <div class="response-example">curl --request GET \
+     --url 'https://api.chucknorris.io/jokes/random' \
+     --header 'accept: application/json'</div>
+            </div>
+        </div>
+
+        <!-- Featured Joke -->
+        <div class="joke-highlight">
+            <h3>🎭 Featured Chuck Norris Joke</h3>
+            <div class="joke-text">"Life's a bitch, and then Chuck Norris bangs yours."</div>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                Retrieved from: https://api.chucknorris.io/jokes/random
+            </p>
+        </div>
+
+        <!-- Quick Start Tips -->
+        <div class="api-info">
+            <h2>⚡ Quick Start Tips</h2>
+            <ul style="padding-left: 20px;">
+                <li><strong>No Authentication Required:</strong> Start making requests immediately</li>
+                <li><strong>CORS Enabled:</strong> Perfect for frontend applications</li>
+                <li><strong>Rate Limit Free:</strong> Make as many requests as needed</li>
+                <li><strong>HTTPS Only:</strong> All endpoints use secure connections</li>
+                <li><strong>JSON Format:</strong> Easy to parse and integrate</li>
+                <li><strong>Multiple Categories:</strong> 16 different joke categories available</li>
+                <li><strong>Search Function:</strong> Find jokes with specific keywords</li>
+                <li><strong>Personalization:</strong> Replace Chuck Norris with any name</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3>🚀 Ready to Get Started?</h3>
+            <p>Visit <strong>https://api.chucknorris.io/</strong> and start integrating Chuck Norris jokes into your applications today!</p>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                This API is completely free and maintained by the community. 
+                No registration, no API keys, just pure Chuck Norris awesomeness!
+            </p>
+        </div>
+    </div>
+</body>
+</html>
